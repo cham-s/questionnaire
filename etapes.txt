@@ -1,0 +1,57 @@
+Creer un questionnaire, editable
+
+Etapes à suivre:
+
+1 - Comprendre le problème
+2 - Planifier la logique
+3 - Coder le programme
+4 - Utiliser un langage pour le traduire en langage machine, ici Java
+5 - Tester le programme
+6 - Mettre le langage en production (release) 
+7 - Maintenir le programme, essayé de trouver des ameliorations
+
+1 - Comprendre le problème
+
+Creer un logiciel de création de questionnaire, avec la possibilité de répondre au questionnaire
+ensuite.
+
+Caractérisques:
+
+- Réponse unique.
+- Au moins deux question.
+- Un point par question si bonne reponse.
+- Le test est réussi si la note est superieur ou egale a la moitié du nombre des question.
+
+En deux temps:
+
+1 - Saisir les questions, en indiquant la bonne réponse.
+2 - Chaque question est affiché. Afficher la note et si le test est réussi ou pas. proposer de recommencer.
+
+Opérations optionnelles
+- Proposé de modifier les questions et les réponses
+- Proposés plusieurs réponses
+- S'abstenir pour ne pas perdre de point.
+
+Contraintes:
+
+- Les Structure de données doivent comporter que des tableaux présent dans la methode main
+- Le Programme doit comporter des méthodes recevant les tableaux en parametres.
+
+2 - Planifier la logique
+// TODO:
+
+3 - Coder le programme
+// TODO:
+
+4 - Utiliser un langage pour le traduire en langage machine, ici Java
+// TODO:
+
+5 - Tester le programme
+// TODO:
+
+6 - Mettre le langage en production (release) 
+// TODO:
+
+7 - Maintenir le programme, essayé de trouver des ameliorations
+// TODO:
+
