@@ -20,7 +20,7 @@ Caractérisques:
 - Réponse unique.
 - Au moins deux question.
 - Un point par question si bonne reponse.
-- Le test est réussi si la note est superieur ou egale a la moitié du nombre des questions.
+- Le test est réussi si la note est superieur ou egale a la moitié du nombre des question.
 
 En deux temps:
 
@@ -34,7 +34,7 @@ Opérations optionnelles
 
 Contraintes:
 
-- Les Structures de données doivent comporter que des tableaux présent dans la methode main
+- Les Structure de données doivent comporter que des tableaux présent dans la methode main
 - Le Programme doit comporter des méthodes recevant les tableaux en parametres.
 
 2 - Planifier la logique
