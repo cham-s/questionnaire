@@ -1,11 +1,14 @@
+/*
+ * Projet cnam 2015 NFA031
+ */
 public class Questionnaire{
 
   /*
-   * Modules 
+   * Methodes
    */
 
-  // Cette methode permet de remplir les questionnaire et définir les réponses
-  public static void remplirQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
+  // Cette methode permet de creer les questionnaire et définir les réponses
+  public static void creerQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
     int i = 0;
     String input1 = " ";
     String input2 = " ";
@@ -102,7 +105,6 @@ public class Questionnaire{
     } else {
       Terminal.ecrireStringln("Vous n'avez pas reussi le test avec " + points + ". :(");
     }
-    
   }
 
 
@@ -115,9 +117,32 @@ public class Questionnaire{
     String propositions[][] = new String[QUEST_MAX][PROP_MAX];
     char reponses_prof[] = new char[QUEST_MAX]; 
     char reponses_eleve[] = new char[QUEST_MAX];
-        
-    remplirQuestionnaire(questions, propositions, reponses_prof);
-    afficherQuestionnaire(questions, propositions);
-    soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
+    
+    // petit interface utilisateur pour ameliorer l'ergonomie
+    int choix = 0;
+    while (choix != 4) {
+      Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n" +
+                              "\t\t\tQue voulez - vous faire?\n\n" +
+                             "1. Creer un questionnaire\n" +
+                             "2. Afficher le questionnaire\n" +
+                             "3. Soumettre le questionnaire\n" +
+                             "4. Quitter\n> ");
+      choix = Terminal.lireInt();
+
+      if (choix == 1) {
+        creerQuestionnaire(questions, propositions, reponses_prof);
+      }
+
+      else if (choix == 2) {
+        afficherQuestionnaire(questions, propositions);
+      }
+
+      else if (choix == 3) {
+        soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
+      }
+
+    }
+
+    Terminal.ecrireStringln("A une prochaine fois...");
   }
 } 
