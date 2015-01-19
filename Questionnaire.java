@@ -4,6 +4,15 @@
 public class Questionnaire{
 
   /*
+   * Globals
+   */
+
+  // Nombre max de propositions correspondant au lettre de l'alphabet
+  private static int PROP_MAX = 26;
+  // Nombre max de questions admise
+  private static int QUEST_MAX = 100;
+
+  /*
    * Methodes
    */
   
@@ -15,6 +24,31 @@ public class Questionnaire{
 
   // Cette methode permet de creer les questionnaire et definir les reponses
   public static void creerQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
+    // Avant quoi que ce sout verifier si le tableau est vide
+    if (questions[1] != null) {
+      Terminal.ecrireString("Vous etes sur le point de d'effacer un questionnare deja creer, \n" +
+          "voulez-vous poursuivre? o/n: >");
+      char option;
+      option = Terminal.lireChar();
+
+      while (option != 'n' && option != 'o') {
+        Terminal.ecrireString("Entrez 'o' pour oui ou 'n' pour non > ");
+        option = Terminal.lireChar();
+        Terminal.ecrireCharln(option);
+      }
+      
+      if (option == 'o') {
+        questions = new String[QUEST_MAX];
+        choix = new String[QUEST_MAX][PROP_MAX];
+        reponses_prof = new char [QUEST_MAX];
+      }else {
+        return; 
+      }
+    }
+    
+    effacerEcran(2);
+    Terminal.ecrireString("\t\t1- Creattion de Questionnaire\n\n");
+
     int i = 0;
     String input1 = " ";
     String input2 = " ";
@@ -37,20 +71,24 @@ public class Questionnaire{
         j++;
         prop++;
 
-      }while(!"".equals(input2));
+      }while (!"".equals(input2));
 
       // Inserer la bonne reponse
       Terminal.ecrireString("     Inserer reponse " + (i + 1) + " : ");
       reponses_prof[i] = Terminal.lireChar();
       i++;
       
-    } while( !"".equals(input1));
+    }while( !"".equals(input1));
   
   }
   
   // Affiche un questionnaire precedemment rempli
   public static void afficherQuestionnaire(String questions[], String choix[][]) {
-     int i = 0;
+    effacerEcran(2); 
+    Terminal.ecrireString("\t\t\t2- Questionnaire\n\n");
+    
+    int i = 0;
+
     // Parcourir le questionnaire
     while (!"".equals(questions[i])) {
       Terminal.ecrireStringln((i + 1) + ". " + questions[i]);
@@ -121,10 +159,6 @@ public class Questionnaire{
 
 
   public static void main (String args[]) {
-    // Nombre max de propositions correspondant au lettre de l'alphabet
-    int PROP_MAX = 26;
-    // Nombre max de questions admis
-    int QUEST_MAX = 100;
     String questions[] = new String[QUEST_MAX];
     String propositions[][] = new String[QUEST_MAX][PROP_MAX];
     char reponses_prof[] = new char[QUEST_MAX]; 
@@ -132,6 +166,7 @@ public class Questionnaire{
     
     // Petit interface utilisateur pour ameliorer l'ergonomie
     int choix = 0;
+    
     while (choix != 4) {
       effacerEcran(10);
       
