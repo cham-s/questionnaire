@@ -6,8 +6,14 @@ public class Questionnaire{
   /*
    * Methodes
    */
+  
+  // Effacer ecran
+  public static void effacerEcran(int nbreDeLigne) {
+    for (int i = 0; i < nbreDeLigne; i++ )
+      Terminal.ecrireChar('\n');   
+  }
 
-  // Cette methode permet de creer les questionnaire et définir les réponses
+  // Cette methode permet de creer les questionnaire et definir les reponses
   public static void creerQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
     int i = 0;
     String input1 = " ";
@@ -25,14 +31,16 @@ public class Questionnaire{
 
       // Tant que l'utilisateur souhaite ajouter une proposition
       do {
-        Terminal.ecrireString("   Entre la proposition " + prop + " (tapez 'Entrer' si plus de proposition): ");
+        Terminal.ecrireString("   Entrez la proposition " + prop + " (tapez 'Entrer' si plus de proposition): ");
         choix[i][j] = Terminal.lireString(); 
         input2 = choix[i][j];
         j++;
         prop++;
 
       }while(!"".equals(input2));
-      Terminal.ecrireString("   Entre la reponse " + (i + 1) + " : ");
+
+      // Inserer la bonne reponse
+      Terminal.ecrireString("     Inserer reponse " + (i + 1) + " : ");
       reponses_prof[i] = Terminal.lireChar();
       i++;
       
@@ -89,6 +97,7 @@ public class Questionnaire{
       Terminal.ecrireString("Votre reponse: ");
       reponses_eleve[i] = Terminal.lireChar();
 
+      // Incrementer les points a chaque bonne reponse
       if (reponses_eleve[i] == reponses_prof[i]) {
         points++;
       }
@@ -97,13 +106,16 @@ public class Questionnaire{
       totalQuestion++;
       Terminal.sautDeLigne();
     }
+    
+    double MOITIE = 2.0;
+    moyenne_qcm = (double) totalQuestion / MOITIE; 
+    moyenne_eleve = (double) points / MOITIE;
 
-    moyenne_qcm = (double) totalQuestion / 2.0; 
-    moyenne_eleve = (double) points / (double) totalQuestion;
+    // Verifier si le test est reussi ou pas et afficher le resultat
     if (moyenne_eleve >= moyenne_qcm) {
-      Terminal.ecrireStringln("Vous avez reussi le test avec " + points + ". :)");
+      Terminal.ecrireStringln("Felicitation vous avez reussi le test avec " + points + " points. :)");
     } else {
-      Terminal.ecrireStringln("Vous n'avez pas reussi le test avec " + points + ". :(");
+      Terminal.ecrireStringln("Malheuresement vous n'avez pas reussi le test :(. points: " + points + ".");
     }
   }
 
@@ -118,15 +130,18 @@ public class Questionnaire{
     char reponses_prof[] = new char[QUEST_MAX]; 
     char reponses_eleve[] = new char[QUEST_MAX];
     
-    // petit interface utilisateur pour ameliorer l'ergonomie
+    // Petit interface utilisateur pour ameliorer l'ergonomie
     int choix = 0;
     while (choix != 4) {
-      Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n" +
+      effacerEcran(10);
+      
+      Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n\n" +
                               "\t\t\tQue voulez - vous faire?\n\n" +
                              "1. Creer un questionnaire\n" +
                              "2. Afficher le questionnaire\n" +
                              "3. Soumettre le questionnaire\n" +
                              "4. Quitter\n> ");
+      // Inserer choix
       choix = Terminal.lireInt();
 
       if (choix == 1) {
@@ -138,6 +153,7 @@ public class Questionnaire{
       }
 
       else if (choix == 3) {
+        effacerEcran(50);
         soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
       }
 
