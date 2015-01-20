@@ -5,6 +5,7 @@ public class Questionnaire{
   
   public static void main (String args[]) {
 
+    effacerEcran(3);
     // Demander le nombre de question max
     char option;
     Terminal.ecrireString("\t\t\tBienvenue dans le Questionnaire 2015\n\n" +
@@ -21,20 +22,20 @@ public class Questionnaire{
     if (option == 'o') {
       effacerEcran(1);
       Terminal.ecrireString("Nombre de questions max: ");
-      quest_max = Terminal.lireInt(); 
+      QUEST_MAX = Terminal.lireInt(); 
       Terminal.ecrireString("Nombre de sous propositions max: ");
-      prop_max = Terminal.lireInt();
+      PROP_MAX = Terminal.lireInt();
 
       Terminal.ecrireString("... Valeurs modifier avec succes.");
     } else {
-      quest_max = 100; 
-      prop_max = 26; 
+      QUEST_MAX = 100; 
+      PROP_MAX = 26; 
     }
     
-    String questions[] = new String[quest_max];
-    String propositions[][] = new String[quest_max][prop_max];
-    char reponses_prof[] = new char[quest_max]; 
-    char reponses_eleve[] = new char[quest_max];
+    String questions[] = new String[QUEST_MAX];
+    String propositions[][] = new String[QUEST_MAX][PROP_MAX];
+    char reponses_prof[] = new char[QUEST_MAX]; 
+    char reponses_eleve[] = new char[QUEST_MAX];
     
     // Petit interface utilisateur pour ameliorer l'ergonomie
     int choix = 0;
@@ -44,7 +45,7 @@ public class Questionnaire{
       
       Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n\n" +
                               "\t\t\tQue voulez - vous faire?\n\n" +
-                             "1. Creer un questionnaire\n" +
+                             "1. Creer votre questionnaire\n" +
                              "2. Afficher le questionnaire\n" +
                              "3. Soumettre le questionnaire\n" +
                              "4. Quitter\n> ");
@@ -76,24 +77,28 @@ public class Questionnaire{
    */
 
   // Nombre max de propositions correspondant au lettre de l'alphabet par defaut
-  static int prop_max;
+  static int PROP_MAX;
   // Nombre max de questions admises par defaut
-  static int quest_max;
+  static int QUEST_MAX;
 
   /*
    * Methodes
    */
   
-  // Effacer ecran
+  /*
+   * Espace a l'ecran
+   */
   public static void effacerEcran(int nbreDeLigne) {
     for (int i = 0; i < nbreDeLigne; i++ )
       Terminal.ecrireChar('\n');   
   }
 
-  // Cette methode permet de creer les questionnaire et definir les reponses
+  /* 
+  *  Creer le questionnaire et definir les reponses
+  */
   public static void creerQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
     // Avant quoi que ce sout verifier si le tableau est vide
-    if (questions[1] != null) {
+     if (questions[1] != null){
       Terminal.ecrireString("Vous etes sur le point de d'effacer un questionnare deja creer, \n" +
           "voulez-vous poursuivre? o/n: >");
       char option;
@@ -105,16 +110,16 @@ public class Questionnaire{
       }
       
       if (option == 'o') {
-        questions = new String[quest_max];
-        choix = new String[quest_max][prop_max];
-        reponses_prof = new char [quest_max];
+        questions = new String[QUEST_MAX];
+        choix = new String[QUEST_MAX][PROP_MAX];
+        reponses_prof = new char [QUEST_MAX];
       }else {
         return; 
       }
     }
     
     effacerEcran(2);
-    Terminal.ecrireString("\t\t1- Creattion de Questionnaire\n\n");
+    Terminal.ecrireString("\t\t\t1- Creattion de Questionnaire\n\n");
 
     int i = 0;
     String input1 = " ";
@@ -148,10 +153,18 @@ public class Questionnaire{
     }while( !"".equals(input1));
   
   }
-  
-  // Affiche un questionnaire precedemment rempli
+
+
+  /*
+  *  Affiche le questionnaire precedemment rempli
+  */
   public static void afficherQuestionnaire(String questions[], String choix[][]) {
     effacerEcran(2); 
+    // Verifier si le questionnaire a afficher est vide
+    if (questions[1] == null) {
+      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau\n");
+      return;
+    }
     Terminal.ecrireString("\t\t\t2- Questionnaire\n\n");
     
     int i = 0;
@@ -175,8 +188,19 @@ public class Questionnaire{
     }
   }
 
+
+  /*
+   *  Soummet le questionnaire a l'eleve et affiche le resultat
+   */
   public static void soumettreQuestionnaire(String questions[]
       , String choix[][], char reponses_eleve[], char reponses_prof[]) {
+    effacerEcran(2);
+    if (questions[1] == null) {
+      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau\n");
+      return;
+    }
+    Terminal.ecrireString("\t\t\t3- Le test comment. Bon courage!\n\n");
+    
     int points = 0;
     double moyenne_qcm = 0.0;
     double moyenne_eleve = 0.0;
