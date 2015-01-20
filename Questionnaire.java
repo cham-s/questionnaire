@@ -1,16 +1,84 @@
 /*
- * Projet cnam 2015 NFA031
+ * Projet cnam 2015 NFA031 Questionnaire
  */
 public class Questionnaire{
+  
+  public static void main (String args[]) {
 
+    // Demander le nombre de question max
+    char option;
+    Terminal.ecrireString("\t\t\tBienvenue dans le Questionnaire 2015\n\n" +
+                             "Par defaut le nombre de question maximum est de 100.\n" +
+                              "Le nombre de sous proposition maximum est de 26 (a-z)\n" +
+                              "Souhaitez vous les modifier? o/n > ");
+    
+    option = Terminal.lireChar();
+    while (option != 'n' && option != 'o') {
+        Terminal.ecrireString("Entrez 'o' pour oui ou 'n' pour non > ");
+        option = Terminal.lireChar();
+    }
+
+    if (option == 'o') {
+      effacerEcran(1);
+      Terminal.ecrireString("Nombre de questions max: ");
+      quest_max = Terminal.lireInt(); 
+      Terminal.ecrireString("Nombre de sous propositions max: ");
+      prop_max = Terminal.lireInt();
+
+      Terminal.ecrireString("... Valeurs modifier avec succes.");
+    } else {
+      quest_max = 100; 
+      prop_max = 26; 
+    }
+    
+    String questions[] = new String[quest_max];
+    String propositions[][] = new String[quest_max][prop_max];
+    char reponses_prof[] = new char[quest_max]; 
+    char reponses_eleve[] = new char[quest_max];
+    
+    // Petit interface utilisateur pour ameliorer l'ergonomie
+    int choix = 0;
+    
+    while (choix != 4) {
+      effacerEcran(10);
+      
+      Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n\n" +
+                              "\t\t\tQue voulez - vous faire?\n\n" +
+                             "1. Creer un questionnaire\n" +
+                             "2. Afficher le questionnaire\n" +
+                             "3. Soumettre le questionnaire\n" +
+                             "4. Quitter\n> ");
+      // Inserer choix
+      choix = Terminal.lireInt();
+
+      if (choix == 1) {
+        creerQuestionnaire(questions, propositions, reponses_prof);
+      }
+
+      else if (choix == 2) {
+        afficherQuestionnaire(questions, propositions);
+      }
+
+      else if (choix == 3) {
+        effacerEcran(50);
+        soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
+      }
+
+    }
+
+    Terminal.ecrireStringln("A une prochaine fois...");
+  }  
+
+
+  
   /*
    * Globals
    */
 
-  // Nombre max de propositions correspondant au lettre de l'alphabet
-  private static int PROP_MAX = 26;
-  // Nombre max de questions admise
-  private static int QUEST_MAX = 100;
+  // Nombre max de propositions correspondant au lettre de l'alphabet par defaut
+  static int prop_max;
+  // Nombre max de questions admises par defaut
+  static int quest_max;
 
   /*
    * Methodes
@@ -34,13 +102,12 @@ public class Questionnaire{
       while (option != 'n' && option != 'o') {
         Terminal.ecrireString("Entrez 'o' pour oui ou 'n' pour non > ");
         option = Terminal.lireChar();
-        Terminal.ecrireCharln(option);
       }
       
       if (option == 'o') {
-        questions = new String[QUEST_MAX];
-        choix = new String[QUEST_MAX][PROP_MAX];
-        reponses_prof = new char [QUEST_MAX];
+        questions = new String[quest_max];
+        choix = new String[quest_max][prop_max];
+        reponses_prof = new char [quest_max];
       }else {
         return; 
       }
@@ -74,7 +141,7 @@ public class Questionnaire{
       }while (!"".equals(input2));
 
       // Inserer la bonne reponse
-      Terminal.ecrireString("     Inserer reponse " + (i + 1) + " : ");
+      Terminal.ecrireString("     Inserer la reponse a la question " + (i + 1) + " : ");
       reponses_prof[i] = Terminal.lireChar();
       i++;
       
@@ -151,49 +218,9 @@ public class Questionnaire{
 
     // Verifier si le test est reussi ou pas et afficher le resultat
     if (moyenne_eleve >= moyenne_qcm) {
-      Terminal.ecrireStringln("Felicitation vous avez reussi le test avec " + points + " points. :)");
+      Terminal.ecrireStringln("Felicitation vous avez reussi le test avec un resultat de " + points + " / " + totalQuestion +  ". ( ^ v ^ )");
     } else {
-      Terminal.ecrireStringln("Malheuresement vous n'avez pas reussi le test :(. points: " + points + ".");
+      Terminal.ecrireStringln("Malheuresement vous n'avez pas reussi le test avec un resultat de " + points + " / " + totalQuestion + ".: (");
     }
-  }
-
-
-  public static void main (String args[]) {
-    String questions[] = new String[QUEST_MAX];
-    String propositions[][] = new String[QUEST_MAX][PROP_MAX];
-    char reponses_prof[] = new char[QUEST_MAX]; 
-    char reponses_eleve[] = new char[QUEST_MAX];
-    
-    // Petit interface utilisateur pour ameliorer l'ergonomie
-    int choix = 0;
-    
-    while (choix != 4) {
-      effacerEcran(10);
-      
-      Terminal.ecrireString("|  ************************** Questionnaire 2015 **************************  |\n\n" +
-                              "\t\t\tQue voulez - vous faire?\n\n" +
-                             "1. Creer un questionnaire\n" +
-                             "2. Afficher le questionnaire\n" +
-                             "3. Soumettre le questionnaire\n" +
-                             "4. Quitter\n> ");
-      // Inserer choix
-      choix = Terminal.lireInt();
-
-      if (choix == 1) {
-        creerQuestionnaire(questions, propositions, reponses_prof);
-      }
-
-      else if (choix == 2) {
-        afficherQuestionnaire(questions, propositions);
-      }
-
-      else if (choix == 3) {
-        effacerEcran(50);
-        soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
-      }
-
-    }
-
-    Terminal.ecrireStringln("A une prochaine fois...");
   }
 } 
