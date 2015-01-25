@@ -12,7 +12,7 @@ public class Questionnaire{
                              "Par defaut le nombre de question maximum est de 100.\n" +
                               "Le nombre de sous proposition maximum est de 26 (a-z)\n" +
                               "Souhaitez vous les modifier? o/n > ");
-    
+
     option = Terminal.lireChar();
     verificationInput(option); 
     
@@ -105,6 +105,7 @@ public class Questionnaire{
       Terminal.ecrireChar('\n');   
   }
 
+
   /*
    *  Boucle de validation d'input
    */
@@ -114,6 +115,20 @@ public class Questionnaire{
         option = Terminal.lireChar();
     }
   }
+
+
+  /*
+   * Verifie si le questionnaire est vide et affiche un message le cas echeant
+   */
+  public static boolean estIlVide (String questions[]) {
+    if (questions[1] == null) {
+      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
+      return true;
+    } else {
+      return false; 
+    }      
+  }
+
 
   /* 
   *  Creer le questionnaire et definir les reponses
@@ -155,15 +170,21 @@ public class Questionnaire{
       char prop = 'a';
 
       // Tant que l'utilisateur souhaite ajouter une proposition
+      if ("".equals(input1)) {
+      
+          break;
+      }
+
       do {
+         
         Terminal.ecrireString("   Entrez la proposition " + prop + " (tapez 'Entrer' si plus de proposition): ");
         choix[i][j] = Terminal.lireString(); 
         input2 = choix[i][j];
         j++;
         prop++;
-
+      
       }while (!"".equals(input2));
-
+      
       // Inserer la bonne reponse
       Terminal.ecrireString("     Inserer la reponse a la question " + (i + 1) + " : ");
       reponses_prof[i] = Terminal.lireChar();
@@ -181,9 +202,9 @@ public class Questionnaire{
     effacerEcran(2); 
     // Verifier si le questionnaire a afficher est vide
     if (questions[1] == null) {
-      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau\n");
+      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
       return;
-    }
+    } 
     Terminal.ecrireString("\t\t\t2- Questionnaire\n\n");
     
     int i = 0;
@@ -215,14 +236,14 @@ public class Questionnaire{
       , String choix[][], char reponses_eleve[], char reponses_prof[]) {
     effacerEcran(2);
     if (questions[1] == null) {
-      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau\n");
-      return;
-    }
+      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
+      return; 
+    }    
     Terminal.ecrireString("\t\t\t3- Le test commence. Bon courage!\n\n");
     
     int points = 0;
     double moyenne_qcm = 0.0;
-    double moyenne_eleve = 0.0;
+    double points_eleve = 0.0;
     int totalQuestion = 0;
     int i = 0;
 
@@ -257,10 +278,10 @@ public class Questionnaire{
     
     double MOITIE = 2.0;
     moyenne_qcm = (double) totalQuestion / MOITIE; 
-    moyenne_eleve = (double) points / MOITIE;
+    points_eleve = (double) points;
 
     // Verifier si le test est reussi ou pas et afficher le resultat
-    if (moyenne_eleve >= moyenne_qcm) {
+    if (points_eleve >= moyenne_qcm) {
       Terminal.ecrireStringln("Felicitation vous avez reussi le test avec un resultat de " + points + " / " + totalQuestion +  ". ( ^ v ^ )");
     } else {
       Terminal.ecrireStringln("Malheuresement vous n'avez pas reussi le test avec un resultat de " + points + " / " + totalQuestion + ".: (");
@@ -286,6 +307,7 @@ public class Questionnaire{
       Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
       return;
     }
+    
     // Numero de la question
     int numeroQuest;
     int derniereEntree;
@@ -327,7 +349,7 @@ public class Questionnaire{
       // Sous menu
       Terminal.ecrireString("\t\tQue voulez faire de cette question?\n\n" +
                             "\t1- Modifier La Formulation\n" +
-                            "\t2- Modifier Les Sous Proposition\n" +
+                            "\t2- Modifier Les Sous Propositions\n" +
                             "\t3- Modifier La Reponse\n" +
                             "\t4- Supprimer La Question\n" +
                             "\t5- Menu Principal\n> ");
@@ -340,17 +362,46 @@ public class Questionnaire{
         questions[index] = Terminal.lireString();
 
         effacerEcran(1);
-        Terminal.ecrireString("Question modifier avec succes.");
+        Terminal.ecrireString("Question modifie avec succes.\n");
         break;
       }
 
       else if (choix == 2) {
-      }
+        j = 0;
+        prop = 'a';
+        String input = " ";
+        Terminal.ecrireString("\t\t4-2 Modifier Les Sous Propositions\n");
+        Terminal.ecrireString("Nouvelles propositions: ");
+        effacerEcran(1); 
+        // Tant que l'utilisateur souhaite ajouter une proposition
+        do {
+          Terminal.ecrireString("   Entrez la proposition " + prop + " (tapez 'Entrer' si plus de proposition): ");
+          propositions[index][j] = Terminal.lireString(); 
+          input = propositions[index][j];
+          j++;
+          prop++;
+        }while(!"".equals(input));
+
+        Terminal.ecrireString("Proposition modifie avec succes.\n");
+         break;
+       }
 
       else if (choix == 3) {
-      }
+        Terminal.ecrireString("\t\t4-3 Modifier La Reponse\n");
+        Terminal.ecrireString("Nouvelle reponse: ");
+        effacerEcran(1);
+
+        // Inserer la bonne reponse
+        Terminal.ecrireString("     Inserer la reponse a la question " + (index + 1) +  " : ");
+        reponses_prof[index] = Terminal.lireChar();
+
+        Terminal.ecrireString("Reponse modifie avec succes.\n");
+        break;
+     }
 
       else if (choix == 4) {
+        Terminal.ecrireString("\t\t4-4 Supprimer Une Question\n");
+        Terminal.ecrireString("Nouvelles propositions: ");
       }  
       else {
         Terminal.ecrireString("Les seuls possible choix sont les suivants: 1, 2, 3, 4, 5"); 
