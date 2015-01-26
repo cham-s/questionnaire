@@ -14,7 +14,6 @@ public class Questionnaire{
                               "Souhaitez vous les modifier? o/n > ");
 
     option = Terminal.lireChar();
-    verificationInput(option); 
     
     if (option == 'o') {
       effacerEcran(1);
@@ -48,34 +47,68 @@ public class Questionnaire{
                              "4. Modifier Question (reformuler)\n" +
                              "5. Quitter\n> ");
       try {
-      // Inserer choix
-      choix = Terminal.lireInt();
+        // Inserer choix
+        choix = Terminal.lireInt();
 
 
-      if (choix == 1) {
-        creerQuestionnaire(questions, propositions, reponses_prof);
-      }
+        if (choix == 1) {
+           // Avant quoi que ce sout verifier si le tableau est vide
+          if (questions[1] != null) {
+            Terminal.ecrireString("Vous etes sur le point de d'effacer un questionnare deja creer, \n" +
+                                   "voulez-vous poursuivre? o/n: >");
+            option = Terminal.lireChar();
 
-      else if (choix == 2) {
-        afficherQuestionnaire(questions, propositions);
-      }
+            verificationInput(option); 
+        
+            if (option == 'o') {
+              questions = new String[QUEST_MAX];
+              propositions = new String[QUEST_MAX][PROP_MAX];
+              reponses_prof = new char [QUEST_MAX];
+              reponses_eleve = new char [QUEST_MAX];
+             
+            } else {
+            
+              break;
+            }
+            
+          } 
+        
+          creerQuestionnaire(questions, propositions, reponses_prof);
+        }
+ 
+       
 
-      else if (choix == 3) {
-        effacerEcran(50);
-        soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof);
-      }
+        else if (choix == 2) {
+          afficherQuestionnaire(questions, propositions);
+        }
 
-      else if (choix == 4) {
-        modifierQuestion(questions, propositions, reponses_prof);
-      }
+        else if (choix == 3) {
+          effacerEcran(50);
+          boolean pointEnMoins;
+          option = ' ';
+          Terminal.ecrireStringln("Les questions sans reponses sont ils penalise? o/n > ");
+          verificationInput(option); 
 
-      else if (choix == 5) {
-        Terminal.ecrireStringln("A une prochaine fois...");
-        break;
-      }
-      else {
-        Terminal.ecrireStringln("Les seuls choix disponible sont les suivants: 1, 2, 3, 4, 5."); 
-      }
+          if (option == 'o') {
+            pointEnMoins = true; 
+          } else {
+            pointEnMoins = false; 
+          }
+
+          soumettreQuestionnaire(questions, propositions, reponses_eleve, reponses_prof, pointEnMoins);
+        }
+
+        else if (choix == 4) {
+          modifierQuestion(questions, propositions, reponses_prof);
+        }
+
+        else if (choix == 5) {
+          Terminal.ecrireStringln("A une prochaine fois...");
+          break;
+        }
+        else {
+          Terminal.ecrireStringln("Les seuls choix disponible sont les suivants: 1, 2, 3, 4, 5."); 
+        }
 
       } catch (Exception e) {
         effacerEcran(3);
@@ -124,24 +157,7 @@ public class Questionnaire{
   *  Creer le questionnaire et definir les reponses
   */
   public static void creerQuestionnaire( String questions[], String choix[][], char reponses_prof[]) {
-    // Avant quoi que ce sout verifier si le tableau est vide
-     if (questions[1] != null){
-      Terminal.ecrireString("Vous etes sur le point de d'effacer un questionnare deja creer, \n" +
-          "voulez-vous poursuivre? o/n: >");
-      char option;
-      option = Terminal.lireChar();
-
-     verificationInput(option); 
-      
-      if (option == 'o') {
-        questions = new String[QUEST_MAX];
-        choix = new String[QUEST_MAX][PROP_MAX];
-        reponses_prof = new char [QUEST_MAX];
-      }else {
-        return; 
-      }
-    }
-    
+   
     effacerEcran(2);
     Terminal.ecrireString("\t\t\t1- Creattion de Questionnaire\n\n");
 
@@ -229,7 +245,7 @@ public class Questionnaire{
    *  Soummet le questionnaire a l'eleve et affiche le resultat
    */
   public static void soumettreQuestionnaire(String questions[]
-      , String choix[][], char reponses_eleve[], char reponses_prof[] ) {
+      , String choix[][], char reponses_eleve[], char reponses_prof[], boolean pointEnMoins) {
     effacerEcran(2);
     if (questions[1] == null) {
       Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
@@ -259,22 +275,29 @@ public class Questionnaire{
         
       }
       // Reponse de l'eleve
-      Terminal.ecrireString("Votre reponse: ");
+      Terminal.ecrireString("Votre reponse (ou un espace si pas de reponse): ");
       reponses_eleve[i] = Terminal.lireChar();
+
       int derniereProp = ('a' + j) - 1;
-      while (reponses_eleve[i] > derniereProp || reponses_eleve[i] < 'a') {
-        Terminal.ecrireString("La reponse doit se situer entre a et " + (char)derniereProp + ". > " );
+      while (reponses_eleve[i] > derniereProp || reponses_eleve[i] < 'a' && reponses_eleve[i] != ' ' ) {
+        Terminal.ecrireString("La reponse doit se situer entre a et " + (char)derniereProp + " ou un espace. > " );
         reponses_eleve[i] = Terminal.lireChar();
       }
-    
+  
       // Incrementer les points a chaque bonne reponse
       if (reponses_eleve[i] == reponses_prof[i]) {
         points++;
       }
 
       i++;
-      totalQuestion++;
-      Terminal.sautDeLigne();
+      // Si l'option point en moins est a true
+      if (pointEnMoins) {
+        if (reponses_eleve[i] !=  ' ') {
+          totalQuestion++;
+        } 
+      } else {
+        totalQuestion++;
+      }
     }
     
     double MOITIE = 2.0;
