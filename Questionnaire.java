@@ -47,8 +47,10 @@ public class Questionnaire{
                              "3. Soumettre Le Questionnaire\n" +
                              "4. Modifier Question (reformuler)\n" +
                              "5. Quitter\n> ");
+      try {
       // Inserer choix
       choix = Terminal.lireInt();
+
 
       if (choix == 1) {
         creerQuestionnaire(questions, propositions, reponses_prof);
@@ -72,7 +74,12 @@ public class Questionnaire{
         break;
       }
       else {
-        Terminal.ecrireStringln("Les seuls choix disponible sont les suivants: 1, 2, 3, 4, 5"); 
+        Terminal.ecrireStringln("Les seuls choix disponible sont les suivants: 1, 2, 3, 4, 5."); 
+      }
+
+      } catch (Exception e) {
+        effacerEcran(3);
+        Terminal.ecrireString("Les entrees attendues sont de type entier.");
       }
 
     }
@@ -171,6 +178,12 @@ public class Questionnaire{
       // Inserer la bonne reponse
       Terminal.ecrireString("     Inserer la reponse a la question " + (i + 1) + " : ");
       reponses_prof[i] = Terminal.lireChar();
+
+      int derniereProp = ('a' + j) - 2;
+      while (reponses_prof[i] > derniereProp || reponses_prof[i] < 'a') {
+        Terminal.ecrireString("La reponse doit se situer entre a et " + (char)derniereProp + ". > " );
+        reponses_prof[i] = Terminal.lireChar();
+      }
       i++;
       
     }while( !"".equals(input1));
@@ -248,7 +261,12 @@ public class Questionnaire{
       // Reponse de l'eleve
       Terminal.ecrireString("Votre reponse: ");
       reponses_eleve[i] = Terminal.lireChar();
-
+      int derniereProp = ('a' + j) - 1;
+      while (reponses_eleve[i] > derniereProp || reponses_eleve[i] < 'a') {
+        Terminal.ecrireString("La reponse doit se situer entre a et " + (char)derniereProp + ". > " );
+        reponses_eleve[i] = Terminal.lireChar();
+      }
+    
       // Incrementer les points a chaque bonne reponse
       if (reponses_eleve[i] == reponses_prof[i]) {
         points++;
@@ -376,7 +394,13 @@ public class Questionnaire{
         // Inserer la bonne reponse
         Terminal.ecrireString("     Inserer la reponse a la question " + (index + 1) +  " : ");
         reponses_prof[index] = Terminal.lireChar();
-
+        
+        int derniereProp = ('a' + j) - 1;
+        while (reponses_prof[index] > derniereProp || reponses_prof[index] < 'a') {
+        Terminal.ecrireString("La reponse doit se situer entre a et " + (char)derniereProp + ". > " );
+        reponses_prof[index] = Terminal.lireChar();
+      }
+ 
         Terminal.ecrireString("Reponse modifie avec succes.\n");
         break;
      }
