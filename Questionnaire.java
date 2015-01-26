@@ -45,7 +45,7 @@ public class Questionnaire{
                              "1. Creer Votre Questionnaire\n" +
                              "2. Afficher Le Questionnaire\n" +
                              "3. Soumettre Le Questionnaire\n" +
-                             "4. Modifier Question (reformuler, supprimer)\n" +
+                             "4. Modifier Question (reformuler)\n" +
                              "5. Quitter\n> ");
       // Inserer choix
       choix = Terminal.lireInt();
@@ -79,10 +79,6 @@ public class Questionnaire{
 
   }  
 
-
-
-  
-
   
   /*
    * Globals
@@ -114,19 +110,6 @@ public class Questionnaire{
         Terminal.ecrireString("Entrez 'o' pour oui ou 'n' pour non > ");
         option = Terminal.lireChar();
     }
-  }
-
-
-  /*
-   * Verifie si le questionnaire est vide et affiche un message le cas echeant
-   */
-  public static boolean estIlVide (String questions[]) {
-    if (questions[1] == null) {
-      Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
-      return true;
-    } else {
-      return false; 
-    }      
   }
 
 
@@ -233,7 +216,7 @@ public class Questionnaire{
    *  Soummet le questionnaire a l'eleve et affiche le resultat
    */
   public static void soumettreQuestionnaire(String questions[]
-      , String choix[][], char reponses_eleve[], char reponses_prof[]) {
+      , String choix[][], char reponses_eleve[], char reponses_prof[] ) {
     effacerEcran(2);
     if (questions[1] == null) {
       Terminal.ecrireString("Le Questionnaire est vide. Rien ne peut etre affiche, vous pouvez en creer un nouveau.\n");
@@ -345,14 +328,13 @@ public class Questionnaire{
       }
     
     effacerEcran(2);
-    while (choix !=5){
+    while (true){
       // Sous menu
       Terminal.ecrireString("\t\tQue voulez faire de cette question?\n\n" +
                             "\t1- Modifier La Formulation\n" +
                             "\t2- Modifier Les Sous Propositions\n" +
                             "\t3- Modifier La Reponse\n" +
-                            "\t4- Supprimer La Question\n" +
-                            "\t5- Menu Principal\n> ");
+                            "\t4- Menu Principal\n> ");
       // Inserer choix
       choix = Terminal.lireInt();
       
@@ -400,10 +382,12 @@ public class Questionnaire{
      }
 
       else if (choix == 4) {
-        Terminal.ecrireString("\t\t4-4 Supprimer Une Question\n");
-        Terminal.ecrireString("Nouvelles propositions: ");
-      }  
-      else {
+      break;
+      // TODO: implement remove question
+        
+     }  
+
+    else {
         Terminal.ecrireString("Les seuls possible choix sont les suivants: 1, 2, 3, 4, 5"); 
       }
     }
