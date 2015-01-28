@@ -3,11 +3,11 @@ Creer un questionnaire, editable
 Etapes à suivre:
 
 1 - Comprendre le problème -----> Fait
-2 - Planifier la logique -------> A Faire
-3 - Coder le programme ---------> A Faire
-4 - Utiliser un langage pour le traduire en langage machine, ici Java --> A Faire
-5 - Tester le programme --> A Faire
-6 - Mettre le langage en production (release) --> A Faire 
+2 - Planifier la logique -------> Fait
+3 - Coder le programme ---------> Fait
+4 - Utiliser un langage pour le traduire en langage machine, ici Java --> Fait
+5 - Tester le programme --> Fait
+6 - Mettre le langage en production (release) --> Fait
 7 - Maintenir le programme, essayé de trouver des ameliorations --> A Faire
 
 1 - Comprendre le problème
@@ -38,47 +38,39 @@ Contraintes:
 - Le Programme doit comporter des méthodes recevant les tableaux en parametres.
 
 2 - Planifier la logique
-// TODO:
+
 
 - Menu:
   1.Creer un questionnaire
-  2.Utiliser le questionnaire
-  3.Quitter
+  2.Afficher questionnaire
+  3.Soummettre Questionnare
+  4.Modifier questionnaire
+  5.Quitter
 
 if 1
     call creer_un_questionnaire()
 else if 2
-    call repondre_au_questinnaire()
+    call afficher_questinnaire()
+else if 3
+    call soumettre_questionnaire()
+else if 4
+    call modifier_questionnaire
 else
-    quitter()
+    quitter
 
-
-- 1.Creer un questionnaire
-    int nombre_de_question // nombre de questions
-    array questionnaire[]
-    array réponse[]
-    print "De Combien de question est composé votre questionnaire?"
-    gets n
-    
-    call ajouter_question(array questionnaire)
-    
-    for nombre_de_question :
-        print "Ques"
-    
-    
 
 3 - Coder le programme
-// TODO:
+Le programme a été codé
 
 4 - Utiliser un langage pour le traduire en langage machine, ici Java
-// TODO:
+Fait
 
 5 - Tester le programme
-// TODO:
+Fait
 
 6 - Mettre le langage en production (release) 
-// TODO:
+Fait
 
 7 - Maintenir le programme, essayé de trouver des ameliorations
-// TODO:
+A Faire
 
